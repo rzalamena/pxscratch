@@ -1,0 +1,53 @@
+@import "normalize.css/normalize";
+@import "bourbon/app/assets/stylesheets/bourbon";
+@import "bourbon-neat/app/assets/stylesheets/neat";
+@import "base/base";
+
+@import "refills";
+
+//
+// Draw a nice close button for "windows"
+//
+.box-close {
+  float: right;
+  margin-top: -24px;
+  margin-right: -24px;
+  cursor: pointer;
+  color: #fff;
+  border: 1px solid #AEAEAE;
+  border-radius: 50%;
+  background: #605F61;
+  font-size: 30px;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 0;
+  padding: 8px 3px 14px 3px;
+  &:before {
+    content: "×";
+  }
+}
+
+//
+// Colorize the Phoenix Framework default div for errors
+//
+.alert {
+  $color: #fbe3e4;
+
+  background-color: $color;
+  color: shade($color, 60%);
+  display: block;
+  margin: ($base-spacing / 2) 0;
+  padding: $base-spacing / 2;
+  border-radius: 6px;
+  text-align: center;
+
+  a {
+    color: shade($color, 70%);
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+      color: shade($color, 90%);
+    }
+  }
+}

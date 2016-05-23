@@ -12,20 +12,92 @@
   </head>
 
   <body>
-    <header class="header">
+    <header class="navigation" role="banner">
+      <div class="navigation-wrapper">
+        <a href="javascript:void(0)" class="logo">
+          <img src="/images/logo.png" alt="Logo Image">
+        </a>
+        <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
+        <nav role="navigation">
+          <ul id="js-navigation-menu" class="navigation-menu show">
+            <li class="nav-link"><a href="javascript:void(0)">Products</a></li>
+            <li class="nav-link"><a href="javascript:void(0)">About Us</a></li>
+            <li class="nav-link"><a href="javascript:void(0)">Contact</a></li>
+            <li id="js-navigation-more" class="nav-link more"><a href="javascript:void(0)">More</a>
+              <ul class="submenu">
+                <li><a href="javascript:void(0)">Submenu Item</a></li>
+                <li><a href="javascript:void(0)">Another Item</a></li>
+                <li class="more"><a href="javascript:void(0)">Item with submenu</a>
+                  <ul class="submenu">
+                    <li><a href="javascript:void(0)">Sub-submenu Item</a></li>
+                    <li><a href="javascript:void(0)">Another Item</a></li>
+                  </ul>
+                </li>
+                <li class="more"><a href="javascript:void(0)">Another submenu</a>
+                  <ul class="submenu">
+                    <li><a href="javascript:void(0)">Sub-submenu</a></li>
+                    <li><a href="javascript:void(0)">An Item</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div class="navigation-tools">
+          <div class="search-bar">
+            <form role="search">
+              <input type="search" placeholder="Enter Search" />
+              <button type="submit">
+                <img src="/images/search.png" alt="Search Icon">
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </header>
 
     <%= for type <- [:info, :error] do %>
       <%= if flash = get_flash(@conn, type) do %>
         <div class="flash-<%= type %>">
           <%= flash %>
+          <div class="box-close"></div>
         </div>
       <% end %>
     <% end %>
 
-    <main role="main">
+    <main class="main" role="main">
       <%= render @view_module, @view_template, assigns %>
     </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="footer-logo">
+        <img src="/images/logo.png" alt="Logo image">
+      </div>
+        <ul>
+          <li><a href="javascript:void(0)">About</a></li>
+          <li><a href="javascript:void(0)">Contact</a></li>
+          <li><a href="javascript:void(0)">Products</a></li>
+        </ul>
+
+        <div class="footer-secondary-links">
+          <ul>
+            <li><a href="javascript:void(0)">Terms and Conditions</a></li>
+            <li><a href="javascript:void(0)">Privacy Policy</a></li>
+          </ul>
+
+          <ul class="footer-social">
+            <li><a href="javascript:void(0)">
+              <img src="/images/facebook.png" alt="Facebook">
+              </a></li>
+            <li><a href="javascript:void(0)">
+              <img src="/images/twitter.png" alt="Twitter">
+            </a></li>
+            <li><a href="javascript:void(0)">
+              <img src="/images/youtube.png" alt="YouTube">
+            </a></li>
+          </ul>
+        </div>
+    </footer>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
