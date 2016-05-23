@@ -18,9 +18,20 @@ defmodule Pxscratch.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Pxscratch, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+     applications: app_list(Mix.env)]
   end
+
+  defp app_list(:test), do: [:ex_machina | app_list]
+  defp app_list(_), do: app_list
+  defp app_list, do: [
+    :phoenix,
+    :phoenix_html,
+    :cowboy,
+    :logger,
+    :gettext,
+    :phoenix_ecto,
+    :postgrex
+  ]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -36,7 +47,8 @@ defmodule Pxscratch.Mixfile do
      {:phoenix_html, "~> 2.4"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:ex_machina, "~> 0.6.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
