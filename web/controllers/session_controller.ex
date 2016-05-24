@@ -25,7 +25,7 @@ defmodule Pxscratch.SessionController do
     end
   end
 
-  def create(conn, params) do
+  def create(conn, _) do
     login_fail(conn)
   end
 
@@ -45,7 +45,7 @@ defmodule Pxscratch.SessionController do
   end
 
   defp already_logged_in(conn, _) do
-    if user = Plug.Conn.get_session(conn, :current_user) do
+    if Plug.Conn.get_session(conn, :current_user) do
       conn
       |> put_flash(:error, "You are already logged in")
       |> redirect(to: page_path(conn, :index))
