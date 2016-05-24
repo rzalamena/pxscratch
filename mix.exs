@@ -30,7 +30,8 @@ defmodule Pxscratch.Mixfile do
     :logger,
     :gettext,
     :phoenix_ecto,
-    :postgrex
+    :postgrex,
+    :comeonin
   ]
 
   # Specifies which paths to compile per environment.
@@ -48,7 +49,8 @@ defmodule Pxscratch.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:ex_machina, "~> 0.6.1"}]
+     {:ex_machina, "~> 0.6.1"},
+     {:comeonin, "~> 2.4"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
