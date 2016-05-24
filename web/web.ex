@@ -36,6 +36,7 @@ defmodule Pxscratch.Web do
 
       import Pxscratch.Router.Helpers
       import Pxscratch.Gettext
+      import Pxscratch.Plugs
     end
   end
 

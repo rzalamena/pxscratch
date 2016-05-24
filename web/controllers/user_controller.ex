@@ -4,6 +4,7 @@ defmodule Pxscratch.UserController do
   alias Pxscratch.User
 
   plug :scrub_params, "user" when action in [:create, :update]
+  plug :authorize_user when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     users = Repo.all(User)
