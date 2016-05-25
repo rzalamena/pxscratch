@@ -21,6 +21,22 @@
         <nav role="navigation">
           <ul id="js-navigation-menu" class="navigation-menu show">
               <%= if signed_in?(@conn) do %>
+                <%= if is_admin?(@conn) do %>
+                  <li id="js-navigation-more" class="nav-link more">
+                    <a href="javascript:void(0)">Admin</a>
+                    <ul class="submenu">
+                      <li class="nav-link">
+                        <%= link "Roles", to: role_path(@conn, :index) %>
+                      </li>
+                      <li class="nav-link">
+                        <%= link "Users", to: user_path(@conn, :index) %>
+                      </li>
+                    </ul>
+                  </li>
+                <% end %>
+                <li class="nav-link">
+                  <%= link "Profile", to: user_path(@conn, :edit, current_user(@conn).id) %>
+                </li>
                 <li class="nav-link">
                   <%= link "Log Out", to: session_path(@conn, :delete, 1), method: :delete %>
                 </li>

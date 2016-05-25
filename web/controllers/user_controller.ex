@@ -1,10 +1,12 @@
 defmodule Pxscratch.UserController do
   use Pxscratch.Web, :controller
 
+  alias Pxscratch.Role
   alias Pxscratch.User
 
   plug :scrub_params, "user" when action in [:create, :update]
-  plug :authorize_user when action in [:edit, :update, :delete]
+  plug :authorize_user when not action in [:new, :create]
+  plug :authorize_admin when not action in [:new, :create, :edit, :update]
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -13,36 +15,56 @@ defmodule Pxscratch.UserController do
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
-    render(conn, "new.html", changeset: changeset)
+    roles = Enum.map(Repo.all(Role), fn(x) ->
+      { x.name, x.id }
+    end)
+    render(conn, "new.html", changeset: changeset, roles: roles)
   end
 
   def create(conn, %{"user" => user_params}) do
+    # If user registration was not done by an admin, enforce the lowest
+    # permission level.
+    unless not is_nil(conn.assigns[:current_user]) and
+      conn.assigns[:current_user].role.admin do
+      user_params = Map.put(user_params, "role_id", 1)
+    end
+
     changeset = User.changeset(%User{}, user_params)
+    roles = Enum.map(Repo.all(Role), fn(x) ->
+      { x.name, x.id }
+    end)
 
     case Repo.insert(changeset) do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully.")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, roles: roles)
     end
   end
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
+    user = Repo.preload(user, :role)
     render(conn, "show.html", user: user)
   end
 
   def edit(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
     changeset = User.changeset(user)
-    render(conn, "edit.html", user: user, changeset: changeset)
+    roles = Enum.map(Repo.all(Role), fn(x) ->
+      { x.name, x.id }
+    end)
+    render(conn, "edit.html", user: user, changeset: changeset, roles: roles)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
+    changeset = User.update_changeset(user, user_params)
+    roles = Enum.map(Repo.all(Role), fn(x) ->
+      { x.name, x.id }
+    end)
 
     case Repo.update(changeset) do
       {:ok, user} ->
@@ -50,7 +72,7 @@ defmodule Pxscratch.UserController do
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+        render(conn, "edit.html", user: user, changeset: changeset, roles: roles)
     end
   end
 

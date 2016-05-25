@@ -1,0 +1,23 @@
+<h2>Show role</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @role.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @role.description %>
+  </li>
+
+  <li>
+    <strong>Admin:</strong>
+    <%= @role.admin %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: role_path(@conn, :edit, @role) %>
+<%= link "Back", to: role_path(@conn, :index) %>

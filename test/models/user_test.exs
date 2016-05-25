@@ -6,6 +6,11 @@ defmodule Pxscratch.UserTest do
   alias Pxscratch.User
   alias Pxscratch.Factory
 
+  setup do
+    admin_role = Factory.create(:role, %{ admin: true })
+    { :ok, admin_role: admin_role }
+  end
+
   test "fill password digest" do
     password = "12345678"
     changeset = User.changeset(%User{}, %{
@@ -46,5 +51,17 @@ defmodule Pxscratch.UserTest do
       changeset = User.update_changeset(user, %{email: email})
       assert { :error, _ } = Repo.update(changeset)
     end
+  end
+
+  test "user must have an existing role", %{ admin_role: admin_role } do
+    user = Factory.build(:user, %{ role_id: nil })
+    changeset = User.changeset(user)
+    assert { :error, _ } = Repo.insert(changeset)
+
+    changeset = User.changeset(user, %{ role_id: -1 })
+    assert { :error, _ } = Repo.insert(changeset)
+
+    changeset = User.changeset(user, %{ role_id: admin_role.id })
+    assert { :ok, _ } = Repo.insert(changeset)
   end
 end

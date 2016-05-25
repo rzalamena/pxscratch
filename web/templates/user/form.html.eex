@@ -35,6 +35,13 @@
     <%= error_tag f, :password_confirmation %>
   </div>
 
+  <%= if is_admin?(@conn) do %>
+    <div class="form-group">
+      <%= label f, :role_id %>
+      <%= select f, :role_id, @roles %>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>

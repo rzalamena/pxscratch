@@ -12,6 +12,7 @@ defmodule Pxscratch.User do
     timestamps
 
     field :password, :string, virtual: true
+    belongs_to :role, Pxscratch.Role
   end
 
   @doc """
@@ -22,13 +23,13 @@ defmodule Pxscratch.User do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(nickname email password), ~w(name))
+    |> cast(params, ~w(nickname email password role_id), ~w(name))
     |> validate_changeset
   end
 
   def update_changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(nickname email), ~w(name password))
+    |> cast(params, ~w(nickname email), ~w(name password role_id))
     |> validate_changeset
   end
 
@@ -36,6 +37,7 @@ defmodule Pxscratch.User do
     changeset
     |> unique_constraint(:nickname)
     |> unique_constraint(:email)
+    |> foreign_key_constraint(:role_id)
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
     |> validate_length(:nickname, min: 4)
