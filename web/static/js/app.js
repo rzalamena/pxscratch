@@ -29,8 +29,7 @@ $(() => {
   //
   // Box close
   //
-  let box_close_button = $(".box-close")
-  box_close_button.on("click", (e) => {
+  $(".box-close").on("click", (e) => {
     e.preventDefault()
     e.toElement.parentNode.remove()
   })
