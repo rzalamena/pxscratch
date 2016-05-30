@@ -30,9 +30,6 @@ defmodule Pxscratch.UserController do
     end
 
     changeset = User.changeset(%User{}, user_params)
-    roles = Enum.map(Repo.all(Role), fn(x) ->
-      { x.name, x.id }
-    end)
 
     case Repo.insert(changeset) do
       {:ok, _user} ->
@@ -40,6 +37,9 @@ defmodule Pxscratch.UserController do
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
+        roles = Enum.map(Repo.all(Role), fn(x) ->
+          { x.name, x.id }
+        end)
         render(conn, "new.html", changeset: changeset, roles: roles)
     end
   end
@@ -62,9 +62,6 @@ defmodule Pxscratch.UserController do
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Repo.get!(User, id)
     changeset = User.update_changeset(user, user_params)
-    roles = Enum.map(Repo.all(Role), fn(x) ->
-      { x.name, x.id }
-    end)
 
     case Repo.update(changeset) do
       {:ok, user} ->
@@ -72,6 +69,9 @@ defmodule Pxscratch.UserController do
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->
+        roles = Enum.map(Repo.all(Role), fn(x) ->
+          { x.name, x.id }
+        end)
         render(conn, "edit.html", user: user, changeset: changeset, roles: roles)
     end
   end
