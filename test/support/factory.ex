@@ -10,7 +10,7 @@ defmodule Pxscratch.Factory do
     password = sequence(:password, &"secret #{&1}")
     %User{
       name: sequence(:name, &"name #{&1}"),
-      email: sequence(:email, &"email #{&1}"),
+      email: sequence(:email, &"email#{&1}@gmail.com"),
       nickname: sequence(:nickname, &"nickname #{&1}"),
       password: password,
       password_digest: hashpwsalt(password),
