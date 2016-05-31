@@ -3,7 +3,15 @@
 @import "bourbon-neat/app/assets/stylesheets/neat";
 @import "base/base";
 
+@import "pages";
 @import "refills";
+
+//
+// Use same styling of buttons for link-buttons
+//
+.link-button {
+  @extend button;
+}
 
 //
 // Draw a nice close button for "windows"

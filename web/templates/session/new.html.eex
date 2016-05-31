@@ -10,4 +10,7 @@
   <%= error_tag f, :password %>
 
   <%= submit "Log In" %>
+  <%= if Pxscratch.Setting.get_bvalue("public_sign_in", false) do %>
+    <%= link "Sign In", to: user_path(@conn, :new), class: "link-button" %>
+  <% end %>
 <% end %>

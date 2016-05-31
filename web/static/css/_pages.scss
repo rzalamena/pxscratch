@@ -1,0 +1,11 @@
+.settings-container {
+  @include outer-container;
+
+  .setting-description {
+    @include span-columns(5);
+  }
+
+  .setting-value {
+    @include span-columns(6);
+  }
+}

@@ -29,4 +29,8 @@ defmodule Pxscratch.LayoutView do
       nil
     end
   end
+
+  def get_page_title do
+    Pxscratch.Setting.get_tvalue("website_name")
+  end
 end

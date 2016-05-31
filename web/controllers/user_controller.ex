@@ -5,6 +5,7 @@ defmodule Pxscratch.UserController do
   alias Pxscratch.User
 
   plug :scrub_params, "user" when action in [:create, :update]
+  plug :authorize_sign_in when action in [:new, :create]
   plug :authorize_user when not action in [:new, :create]
   plug :authorize_admin when not action in [:new, :create, :edit, :update]
 
@@ -86,5 +87,16 @@ defmodule Pxscratch.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  def authorize_sign_in(conn, _params) do
+    if Pxscratch.Setting.get_bvalue("public_sign_in", false) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "Public registrations are not allowed now")
+      |> redirect(to: page_path(conn, :index))
+      |> halt
+    end
   end
 end

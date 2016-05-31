@@ -53,6 +53,7 @@ defmodule Pxscratch.Web do
       import Pxscratch.Router.Helpers
       import Pxscratch.ErrorHelpers
       import Pxscratch.Gettext
+      import Pxscratch.ViewHelper, only: [checkbox2: 2, checkbox2: 3]
     end
   end
 

@@ -17,6 +17,8 @@ defmodule Pxscratch.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/settings", PageController, :settings
+    put "/save_setting", PageController, :save_setting
     resources "/users", UserController
     resources "/roles", RoleController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
