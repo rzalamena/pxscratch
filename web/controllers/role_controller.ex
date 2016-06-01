@@ -4,7 +4,6 @@ defmodule Pxscratch.RoleController do
   alias Pxscratch.Role
 
   plug :scrub_params, "role" when action in [:create, :update]
-  plug :authorize_user
   plug :authorize_admin
 
   def index(conn, _params) do

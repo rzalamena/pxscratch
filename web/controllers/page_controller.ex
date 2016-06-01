@@ -3,7 +3,6 @@ defmodule Pxscratch.PageController do
 
   alias Pxscratch.Setting
 
-  plug :authorize_user when action in [:settings, :save_setting]
   plug :authorize_admin when action in [:settings, :save_setting]
 
   def index(conn, _params) do
@@ -19,10 +18,10 @@ defmodule Pxscratch.PageController do
     setting = Repo.get_by!(Setting, name: setting_params["name"])
     changeset = Setting.update_changeset(setting, setting_params)
     case Repo.update(changeset) do
-      {:ok, setting} ->
+      {:ok, _} ->
         conn
         |> redirect(to: page_path(conn, :settings))
-      {:error, changeset} ->
+      {:error, _} ->
         conn
         |> put_flash(:error, "Failed to save setting")
         |> redirect(to: page_path(conn, :settings))
