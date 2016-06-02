@@ -90,7 +90,7 @@ defmodule Pxscratch.UserController do
     |> redirect(to: user_path(conn, :index))
   end
 
-  defp authorize_owner(conn, params) do
+  defp authorize_owner(conn, _) do
     case load_user(conn) do
       {:ok, conn} ->
         user = conn.assigns[:current_user]
