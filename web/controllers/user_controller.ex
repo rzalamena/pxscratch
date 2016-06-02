@@ -7,6 +7,7 @@ defmodule Pxscratch.UserController do
   plug :scrub_params, "user" when action in [:create, :update]
   plug :authorize_admin when not action in [:new, :create, :edit, :update]
   plug :authorize_sign_in when action in [:new, :create]
+  plug :authorize_owner when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     users = Repo.all(User)
@@ -86,5 +87,22 @@ defmodule Pxscratch.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  defp authorize_owner(conn, params) do
+    case load_user(conn) do
+      {:ok, conn} ->
+        user = conn.assigns[:current_user]
+        if String.to_integer(conn.params["id"]) == user.id or user.role.admin do
+          conn
+        else
+          conn
+          |> put_flash(:error, "You can't edit others profile")
+          |> redirect(to: page_path(conn, :index))
+          |> halt
+        end
+      {:error, _} ->
+        redirect_unauthorized(conn)
+    end
   end
 end

@@ -37,7 +37,7 @@ defmodule Pxscratch.Plugs do
     end
   end
 
-  defp redirect_unauthorized(conn) do
+  def redirect_unauthorized(conn) do
     conn
     |> put_flash(:error, "Unauthorized")
     |> redirect(to: page_path(conn, :index))
@@ -58,7 +58,7 @@ defmodule Pxscratch.Plugs do
     end
   end
 
-  defp load_user(conn) do
+  def load_user(conn) do
     if conn.assigns[:current_user] do
       {:ok, conn}
     else

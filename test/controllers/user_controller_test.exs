@@ -16,6 +16,17 @@ defmodule Pxscratch.UserControllerTest do
     }
   end
 
+  defp login_as(conn, user) do
+    conn = post(conn, session_path(conn, :create), user: %{
+      email: user.email,
+      password: user.password,
+    })
+    assert html_response(conn, 302)
+    refute get_flash(conn, :error)
+    conn
+    |> clear_flash
+  end
+
   test "public registration denied", %{normal_role: normal_role} do
     Repo.get_by(Setting, name: "public_sign_in")
     |> Setting.update_changeset(%{bvalue: false})
@@ -89,5 +100,44 @@ defmodule Pxscratch.UserControllerTest do
     assert new_user
     assert new_user.role_id != 1
     assert new_user.role_id == normal_role.id
+  end
+
+  test "normal user can't edit or delete others",
+    %{admin_user: admin_user, normal_user: normal_user} do
+    conn =
+      conn()
+      |> login_as(normal_user)
+
+    conn = get(conn, user_path(conn, :edit, admin_user.id))
+    assert html_response(conn, 302)
+    assert get_flash(conn, :error)
+
+    conn = get(conn, user_path(conn, :delete, admin_user.id))
+    assert html_response(conn, 302)
+    assert get_flash(conn, :error)
+
+    assert Repo.get_by(User, email: admin_user.email)
+  end
+
+  test "normal user can edit his own profile",
+    %{normal_user: normal_user} do
+      conn =
+        conn()
+        |> login_as(normal_user)
+
+      conn = get(conn, user_path(conn, :edit, normal_user))
+      assert html_response(conn, 200)
+      refute get_flash(conn, :error)
+
+      new_name = "new name yay"
+      conn = put(conn, user_path(conn, :update, normal_user), %{
+        "user": %{ "name": new_name }
+      })
+      assert html_response(conn, 302)
+      refute get_flash(conn, :error)
+
+      user = Repo.get_by(User, email: normal_user.email)
+      assert user
+      assert user.name == new_name
   end
 end
