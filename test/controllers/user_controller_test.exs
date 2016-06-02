@@ -108,11 +108,12 @@ defmodule Pxscratch.UserControllerTest do
       conn()
       |> login_as(normal_user)
 
-    conn = get(conn, user_path(conn, :edit, admin_user.id))
+    conn = get(conn, user_path(conn, :edit, admin_user))
     assert html_response(conn, 302)
     assert get_flash(conn, :error)
+    conn = clear_flash(conn)
 
-    conn = get(conn, user_path(conn, :delete, admin_user.id))
+    conn = delete(conn, user_path(conn, :delete, admin_user))
     assert html_response(conn, 302)
     assert get_flash(conn, :error)
 
