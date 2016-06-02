@@ -5,7 +5,8 @@ defmodule Pxscratch.UserController do
   alias Pxscratch.User
 
   plug :scrub_params, "user" when action in [:create, :update]
-  plug :authorize_admin when not action in [:new, :create, :edit, :update]
+  plug :authorize_user when not action in [:new, :create, :show]
+  plug :authorize_admin when action in [:index, :delete]
   plug :authorize_sign_in when action in [:new, :create]
   plug :authorize_owner when action in [:edit, :update, :delete]
 
