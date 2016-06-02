@@ -26,7 +26,7 @@ defmodule Pxscratch.UserController do
   def create(conn, %{"user" => user_params}) do
     # If user registration was not done by an admin, enforce the lowest
     # permission level.
-    unless not is_nil(conn.assigns[:current_user]) and
+    unless is_map(conn.assigns[:current_user]) and
       conn.assigns[:current_user].role.admin do
       user_params = Map.put(user_params, "role_id", 1)
     end
