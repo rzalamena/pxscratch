@@ -64,4 +64,15 @@ defmodule Pxscratch.Setting do
         r.tvalue
     end
   end
+
+  def get_ivalue(name, default \\ 0) do
+    q = from s in Setting,
+      where: ilike(s.name, ^name)
+    case Repo.one(q) do
+      nil ->
+        default
+      r ->
+        r.ivalue
+    end
+  end
 end

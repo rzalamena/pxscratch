@@ -8,17 +8,7 @@
     <div class="setting-value">
       <%= form_for Setting.changeset(setting), page_path(@conn, :save_setting), fn f -> %>
         <%= hidden_input f, :name, value: setting.name %>
-        <%=
-            opts = [ onchange: "form = this; setTimeout(function(){form.submit()}, 500);" ]
-            case setting.type do
-              "boolean" ->
-                checkbox2 f, :bvalue, opts
-              "text" ->
-                text_input f, :tvalue, opts
-              _ ->
-                "unknown type: '#{setting.type}'"
-            end
-        %>
+        <%= render_setting(f, setting.type) %>
       <% end %>
     </div>
   <% end %>

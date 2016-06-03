@@ -70,7 +70,7 @@ defmodule Pxscratch.UserControllerTest do
     # happen.
     new_user = Repo.get_by(User, email: user.email)
     assert new_user
-    assert new_user.role_id == 1
+    assert new_user.role_id == Setting.get_ivalue("default_role")
     assert new_user.role_id != normal_role.id
   end
 
@@ -98,7 +98,7 @@ defmodule Pxscratch.UserControllerTest do
     # The controller should apply the desired role the admin selected.
     new_user = Repo.get_by(User, email: user.email)
     assert new_user
-    assert new_user.role_id != 1
+    assert new_user.role_id != Setting.get_ivalue("default_role")
     assert new_user.role_id == normal_role.id
   end
 

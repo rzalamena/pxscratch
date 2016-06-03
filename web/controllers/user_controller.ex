@@ -2,6 +2,7 @@ defmodule Pxscratch.UserController do
   use Pxscratch.Web, :controller
 
   alias Pxscratch.Role
+  alias Pxscratch.Setting
   alias Pxscratch.User
 
   plug :scrub_params, "user" when action in [:create, :update]
@@ -26,9 +27,9 @@ defmodule Pxscratch.UserController do
   def create(conn, %{"user" => user_params}) do
     # If user registration was not done by an admin, enforce the lowest
     # permission level.
-    unless is_map(conn.assigns[:current_user]) and
-      conn.assigns[:current_user].role.admin do
-      user_params = Map.put(user_params, "role_id", 1)
+    if is_nil(conn.assigns[:current_user]) or
+      not conn.assigns[:current_user].role.admin do
+      user_params = Map.put(user_params, "role_id", Setting.get_ivalue("default_role"))
     end
 
     changeset = User.changeset(%User{}, user_params)

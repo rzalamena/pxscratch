@@ -38,7 +38,11 @@
   <%= if is_admin?(@conn) do %>
     <div class="form-group">
       <%= label f, :role_id %>
-      <%= select f, :role_id, @roles %>
+      <%= if Ecto.Changeset.get_field(@changeset, :role_id) do %>
+        <%= select f, :role_id, @roles %>
+      <% else %>
+        <%= select f, :role_id, @roles, value: Pxscratch.Setting.get_ivalue("default_role") %>
+      <% end %>
     </div>
   <% end %>
 

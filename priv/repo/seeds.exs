@@ -89,3 +89,10 @@ create_setting.(%Setting{
   type: "boolean",
   bvalue: false,
 })
+
+create_setting.(%Setting{
+  name: "default_role",
+  description: "What is the default role",
+  type: "select:role",
+  ivalue: default_role.id,
+})
