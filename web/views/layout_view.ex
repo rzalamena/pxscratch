@@ -5,28 +5,25 @@ defmodule Pxscratch.LayoutView do
   alias Pxscratch.User
 
   def signed_in?(conn) do
-    if Plug.Conn.get_session(conn, :current_user) do
-      true
-    else
-      false
+    case load_user(conn) do
+      {:ok, conn} -> true
+      {:error, conn} -> false
     end
   end
 
   def is_admin?(conn) do
-    if current_user = Plug.Conn.get_session(conn, :current_user) do
-      user = Repo.get(User, current_user.id)
-      |> Repo.preload(:role)
-      user.role.admin
-    else
-      false
+    case load_user(conn) do
+      {:ok, conn} ->
+        user = conn.assigns[:current_user]
+        user.role.admin
+      {:error, conn} -> false
     end
   end
 
   def current_user(conn) do
-    if current_user = Plug.Conn.get_session(conn, :current_user) do
-      Repo.get(User, current_user.id)
-    else
-      nil
+    case load_user(conn) do
+      {:ok, conn} -> conn.assigns[:current_user]
+      {:error, conn} -> nil
     end
   end
 
