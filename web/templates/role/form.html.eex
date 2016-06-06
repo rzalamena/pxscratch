@@ -7,23 +7,25 @@
 
   <div class="form-group">
     <%= label f, :name, class: "control-label" %>
-    <%= textarea f, :name, class: "form-control" %>
+    <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
     <%= label f, :description, class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
+    <%= text_input f, :description, class: "form-control" %>
     <%= error_tag f, :description %>
   </div>
 
   <div class="form-group">
-    <%= label f, :admin, class: "control-label" %>
-    <%= checkbox f, :admin, class: "form-control" %>
-    <%= error_tag f, :admin %>
+    <%= label f, "Privileges" %>
+    <%= checkbox2 f, :admin %> Admin<br />
+    <br />
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <p>
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </p>
   </div>
 <% end %>
