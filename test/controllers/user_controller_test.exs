@@ -16,17 +16,6 @@ defmodule Pxscratch.UserControllerTest do
     }
   end
 
-  defp login_as(conn, user) do
-    conn = post(conn, session_path(conn, :create), user: %{
-      email: user.email,
-      password: user.password,
-    })
-    assert html_response(conn, 302)
-    refute get_flash(conn, :error)
-    conn
-    |> clear_flash
-  end
-
   test "public registration denied", %{normal_role: normal_role} do
     Repo.get_by(Setting, name: "public_sign_in")
     |> Setting.update_changeset(%{bvalue: false})

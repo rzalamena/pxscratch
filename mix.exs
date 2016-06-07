@@ -50,7 +50,8 @@ defmodule Pxscratch.Mixfile do
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:ex_machina, "~> 0.6.1"},
-     {:comeonin, "~> 2.4"}]
+     {:comeonin, "~> 2.4"},
+     {:slugger, "~> 0.1.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

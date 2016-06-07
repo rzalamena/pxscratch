@@ -29,6 +29,17 @@ defmodule Pxscratch.ConnCase do
 
       # The default endpoint for testing
       @endpoint Pxscratch.Endpoint
+
+      def login_as(conn, user) do
+        conn = post(conn, session_path(conn, :create), user: %{
+          email: user.email,
+          password: user.password,
+        })
+        assert html_response(conn, 302)
+        refute get_flash(conn, :error)
+        conn
+        |> clear_flash
+      end
     end
   end
 

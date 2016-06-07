@@ -13,6 +13,7 @@ defmodule Pxscratch.User do
 
     field :password, :string, virtual: true
     belongs_to :role, Pxscratch.Role
+    has_many :posts, Pxscratch.Post
   end
 
   @doc """

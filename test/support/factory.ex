@@ -4,6 +4,7 @@ defmodule Pxscratch.Factory do
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   alias Pxscratch.User
+  alias Pxscratch.Post
   alias Pxscratch.Role
 
   def factory(:user) do
@@ -22,6 +23,18 @@ defmodule Pxscratch.Factory do
     %Role{
       name: sequence(:name, &"name #{&1}"),
       description: sequence(:description, &"Role description #{&1}"),
+    }
+  end
+
+  def factory(:post) do
+    title = sequence(:title, &"Title #{&1}")
+    %Post{
+      title: title,
+      content: "Just some content",
+      comment_status: 0,
+      page_url: Slugger.slugify_downcase(title),
+      publish_date: Ecto.DateTime.utc(),
+      user: create(:user),
     }
   end
 end

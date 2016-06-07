@@ -21,6 +21,7 @@ defmodule Pxscratch.Router do
     put "/save_setting", PageController, :save_setting
     resources "/users", UserController
     resources "/roles", RoleController
+    resources "/posts", PostController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 

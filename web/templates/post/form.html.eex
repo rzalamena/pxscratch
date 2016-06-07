@@ -1,0 +1,112 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="vertical-tabs-container">
+    <div class="vertical-tabs">
+      <a href="javascript:void(0)" class="js-vertical-tab vertical-tab is-active" rel="tab1">
+        Publish
+      </a>
+      <a href="javascript:void(0)" class="js-vertical-tab vertical-tab" rel="tab2">
+        Comments
+      </a>
+      <a href="javascript:void(0)" class="js-vertical-tab vertical-tab" rel="tab3">
+        SEO
+      </a>
+    </div>
+
+    <div class="vertical-tab-content-container">
+      <a href="" class="js-vertical-tab-accordion-heading vertical-tab-accordion-heading is-active" rel="tab1">
+        Publish
+      </a>
+      <div id="tab1" class="js-vertical-tab-content vertical-tab-content">
+        <%= label f, :protect, class: "control-label" %>
+        <%= if Ecto.Changeset.get_field(@changeset, :password) do %>
+          <%= checkbox2 f, :protect, value: true %>
+        <% else %>
+          <%= checkbox2 f, :protect, value: false %>
+        <% end %>
+
+        <div class="password-group form-group">
+          <%= label f, :password, class: "control-label" %>
+          <%= text_input f, :password, class: "form-control" %>
+          <%= error_tag f, :password %>
+        </div>
+
+        <%= label f, :publish, class: "control-label" %>
+        <%= if Ecto.Changeset.get_field(@changeset, :publish_date) do %>
+          <%= checkbox2 f, :publish, value: true %>
+        <% else %>
+          <%= checkbox2 f, :publish, value: false %>
+        <% end %>
+
+        <div class="publish-date-group form-group">
+          <%= label f, :publish_date, class: "control-label" %>
+          <%= datetime_select f, :publish_date, value: Ecto.DateTime.utc, class: "form-control" %>
+          <%= error_tag f, :publish_date %>
+        </div>
+
+        <div class="form-group">
+          <%= submit "Save", class: "btn btn-primary" %>
+        </div>
+        <br />
+      </div>
+
+      <a href="" class="js-vertical-tab-accordion-heading vertical-tab-accordion-heading" rel="tab2">
+        Comments
+      </a>
+      <div id="tab2" class="js-vertical-tab-content vertical-tab-content">
+        <div class="form-group">
+          <%= label f, :comment_status, class: "control-label" %>
+          <%= select_comment_status f, class: "form-control" %>
+          <%= error_tag f, :comment_status %>
+        </div>
+        <p>
+          <b>Allowed:</b> Anyone can post comments.
+        </p>
+        <p>
+          <b>Prohibited:</b> No one can post comments.
+        </p>
+        <p>
+          <b>Review:</b> Comments must be approved before going public.
+        </p>
+        <div class="form-group">
+          <%= submit "Save", class: "btn btn-primary" %>
+        </div>
+      </div>
+
+      <a href="" class="js-vertical-tab-accordion-heading vertical-tab-accordion-heading" rel="tab3">
+        SEO
+      </a>
+      <div id="tab3" class="js-vertical-tab-content vertical-tab-content">
+        <div class="form-group">
+          <%= label f, :page_url, class: "control-label" %>
+          <%= text_input f, :page_url, class: "form-control" %>
+          <%= error_tag f, :page_url %>
+        </div>
+        <div class="form-group">
+          <%= submit "Save", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :content, class: "control-label" %>
+    <%= textarea f, :content, class: "form-control", rows: 16 %>
+    <%= error_tag f, :content %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>
