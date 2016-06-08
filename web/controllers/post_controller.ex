@@ -4,12 +4,21 @@ defmodule Pxscratch.PostController do
   alias Pxscratch.Post
 
   plug :scrub_params, "post" when action in [:create, :update]
-  plug :authorize_user when not action in [:show]
+  plug :authorize_user when not action in [:index, :show]
 
-  def index(conn, _params) do
-    posts = Repo.all(Post)
-    posts = Repo.preload(posts, :user)
-    render(conn, "index.html", posts: posts)
+  def index(conn, params) do
+    query = Post
+      |> Ecto.Query.order_by([p], desc: p.publish_date)
+      |> Ecto.Query.preload(:user)
+
+    query =
+      case load_user(conn) do
+        {:error, _} -> Ecto.Query.where(query, [p], not is_nil(p.publish_date))
+        _ -> query
+      end
+
+    page = Pxscratch.Repo.paginate(query, params)
+    render(conn, "index.html", posts: page.entries, page: page)
   end
 
   def new(conn, _params) do
@@ -40,7 +49,17 @@ defmodule Pxscratch.PostController do
   defp show_int(conn, params) do
     id = params["id"]
     password = params["password"]
-    post = Repo.get!(Post, id)
+    case Integer.parse(id) do
+      {number, _} ->
+        q = Post
+          |> Ecto.Query.where([p], p.id == ^number)
+      :error ->
+        q = Post
+          |> Ecto.Query.where([p], p.page_url == ^id)
+    end
+    post =
+      Repo.one!(q)
+      |> Repo.preload(:user)
     if Post.is_published(post) do
       if Post.is_authenticated(post, password) do
         render(conn, "show.html", post: post)

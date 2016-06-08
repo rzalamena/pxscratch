@@ -16,12 +16,14 @@ defmodule Pxscratch.Router do
   scope "/", Pxscratch do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", PostController, :index
+    get "/home", PageController, :index
     get "/settings", PageController, :settings
     put "/save_setting", PageController, :save_setting
     resources "/users", UserController
     resources "/roles", RoleController
     resources "/posts", PostController
+    get "/posts/:page_url", PostController, :show
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 

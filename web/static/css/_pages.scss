@@ -9,3 +9,35 @@
     @include span-columns(6);
   }
 }
+
+.post-container {
+  $background-color: #fff;
+
+  background: $background-color;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin: 32px 0;
+  border: solid 1px shade($background-color, 5%);
+
+  box-shadow: 0 4px 4px transparentize(black, 0.8);
+  &:hover {
+    box-shadow: 0 4px 16px transparentize(black, 0.3);
+  }
+
+  .details {
+    font-size: $base-font-size - 0.1em;
+
+    margin: 8px;
+    padding: 12px 16px;
+    background: shade($background-color, 10%);
+    border-radius: 4px;
+    box-shadow: 0 4px 4px transparentize(black, 0.8);
+  }
+}
+
+.post-unpublished {
+  box-shadow: 0 4px 16px transparentize(red, 0.6);
+  &:hover {
+    box-shadow: 0 4px 32px transparentize(red, 0.3);
+  }
+}

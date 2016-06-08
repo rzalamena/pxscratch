@@ -6,7 +6,7 @@ defmodule Pxscratch.PageController do
   plug :authorize_admin when action in [:settings, :save_setting]
 
   def index(conn, _params) do
-    render conn, "index.html"
+    redirect(conn, to: post_path(conn, :index))
   end
 
   def settings(conn, _params) do

@@ -1,43 +1,15 @@
-<h2>Show post</h2>
+<div class="post-container">
+  <h1><%= @post.title %></h1>
 
-<ul>
+  <%= @post.content %>
 
-  <li>
-    <strong>User:</strong>
-    <%= @post.user_id %>
-  </li>
+  <div class="details">
+    <b><%= @post.user.nickname %></b><br />
+    Published at <%= @post.publish_date %><br />
+    <p>
+      <%= link "Edit", to: post_path(@conn, :edit, @post), class: "link-button" %>
+    </p>
+  </div>
+</div>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @post.title %>
-  </li>
-
-  <li>
-    <strong>Content:</strong>
-    <%= @post.content %>
-  </li>
-
-  <li>
-    <strong>Publish date:</strong>
-    <%= @post.publish_date %>
-  </li>
-
-  <li>
-    <strong>Comment status:</strong>
-    <%= @post.comment_status %>
-  </li>
-
-  <li>
-    <strong>Password:</strong>
-    <%= @post.password %>
-  </li>
-
-  <li>
-    <strong>Page url:</strong>
-    <%= @post.page_url %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: post_path(@conn, :edit, @post) %>
-<%= link "Back", to: post_path(@conn, :index) %>
+<%= link "Back", to: post_path(@conn, :index), class: "link-button" %>

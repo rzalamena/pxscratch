@@ -17,4 +17,6 @@
   "poolboy": {:hex, :poolboy, "1.5.1", "6b46163901cfd0a1b43d692657ed9d7e599853b3b21b95ae5ae0a777cf9b6ca8", [:rebar], []},
   "postgrex": {:hex, :postgrex, "0.11.1", "f48af70c0a58b9bfd1aaa456ec4273624554cfb837726b6a7f0701da4a94b2dd", [:mix], [{:decimal, "~> 1.0", [hex: :decimal, optional: false]}, {:db_connection, "~> 0.2", [hex: :db_connection, optional: false]}, {:connection, "~> 1.0", [hex: :connection, optional: false]}]},
   "ranch": {:hex, :ranch, "1.2.1", "a6fb992c10f2187b46ffd17ce398ddf8a54f691b81768f9ef5f461ea7e28c762", [:make], []},
+  "scrivener": {:hex, :scrivener, "1.2.1", "4d50f21b5c43cc88d072762584f6e49e206901d7d36007928f156f2e974eec4a", [:mix], [{:postgrex, ">= 0.0.0", [hex: :postgrex, optional: true]}, {:ecto, "~> 1.1", [hex: :ecto, optional: false]}]},
+  "scrivener_html": {:hex, :scrivener_html, "1.1.1", "ce6e0bb070db7d60c46c1115298c3a731fca5a87f58f5adca707f2cff35b6f15", [:mix], [{:phoenix, "~> 1.0 or ~> 1.2-rc", [hex: :phoenix, optional: true]}, {:phoenix_html, "~> 2.2", [hex: :phoenix_html, optional: false]}, {:scrivener, "~> 1.2", [hex: :scrivener, optional: false]}]},
   "slugger": {:hex, :slugger, "0.1.0", "04a0f2da7e0770d41eb15e166aa2b1f8fcd26a80f43ed96d56b1b1d4bc5075df", [:mix], []}}

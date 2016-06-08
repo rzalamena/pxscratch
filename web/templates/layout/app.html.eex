@@ -21,9 +21,6 @@
         <nav role="navigation">
           <ul id="js-navigation-menu" class="navigation-menu show">
               <%= if signed_in?(@conn) do %>
-                <li class="nav-link">
-                  <%= link "Posts", to: post_path(@conn, :index) %>
-                </li>
                 <%= if is_admin?(@conn) do %>
                   <li id="js-navigation-more" class="nav-link more">
                     <a href="javascript:void(0)">Admin</a>
@@ -33,6 +30,9 @@
                       </li>
                       <li class="nav-link">
                         <%= link "Users", to: user_path(@conn, :index) %>
+                      </li>
+                      <li class="nav-link">
+                        <%= link "Settings", to: page_path(@conn, :settings) %>
                       </li>
                     </ul>
                   </li>
