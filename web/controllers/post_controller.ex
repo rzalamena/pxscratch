@@ -47,7 +47,7 @@ defmodule Pxscratch.PostController do
       else
         conn
         |> put_flash(:info, "You need password to see this post")
-        |> render("show.html", post: post)
+        |> render("auth.html", post: post, changeset: Post.changeset(%Post{}))
       end
     else
       conn
@@ -57,11 +57,11 @@ defmodule Pxscratch.PostController do
   end
 
   def show(conn, params = %{}) do
-    unless Map.has_key?(params, "id") do
-      params = Map.put(params, "id", 0)
-    end
-    unless Map.has_key?(params, "password") do
-      params = Map.put(params, "password", nil)
+    if Map.has_key?(params, "post") do
+      post_params = params["post"]
+      if is_map(post_params) and post_params["password"] do
+        params = Map.put(params, "password", post_params["password"])
+      end
     end
     show_int(conn, params)
   end

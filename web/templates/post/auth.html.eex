@@ -1,0 +1,8 @@
+<h2>Authentication Required</h2>
+
+<%= form_for @changeset, post_path(@conn, :show, @post), [method: :get, enforce_utf8: false], fn f -> %>
+  Please enter the password to read the post:
+  <%= label f, :password %>
+  <%= password_input f, :password %>
+  <%= submit "Read" %>
+<% end %>
