@@ -49,16 +49,17 @@ defmodule Pxscratch.PostController do
   defp show_int(conn, params) do
     id = params["id"]
     password = params["password"]
-    case Integer.parse(id) do
-      {number, _} ->
-        q = Post
+    query =
+      case Integer.parse(id) do
+        {number, _} ->
+          Post
           |> Ecto.Query.where([p], p.id == ^number)
-      :error ->
-        q = Post
+        :error ->
+          Post
           |> Ecto.Query.where([p], p.page_url == ^id)
-    end
+      end
     post =
-      Repo.one!(q)
+      Repo.one!(query)
       |> Repo.preload(:user)
     if Post.is_published(post) do
       if Post.is_authenticated(post, password) do

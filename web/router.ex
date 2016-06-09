@@ -23,7 +23,6 @@ defmodule Pxscratch.Router do
     resources "/users", UserController
     resources "/roles", RoleController
     resources "/posts", PostController
-    get "/posts/:page_url", PostController, :show
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
