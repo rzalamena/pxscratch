@@ -4,11 +4,16 @@
   <%= @post.content %>
 
   <div class="details">
-    <b><%= @post.user.nickname %></b><br />
-    Published at <%= @post.publish_date %><br />
     <p>
-      <%= link "Edit", to: post_path(@conn, :edit, @post), class: "link-button" %>
+      <b><%= @post.user.nickname %></b><br />
+      Published at <%= @post.publish_date %><br />
     </p>
+
+    <%= if signed_in?(@conn) do %>
+      <%= link "Edit", to: post_path(@conn, :edit, @post), class: "link-button" %>
+      <%= link "Delete", to: post_path(@conn, :delete, @post),
+          method: :delete, data: [confirm: "Are you sure?"], class: "link-button" %>
+    <% end %>
   </div>
 </div>
 
