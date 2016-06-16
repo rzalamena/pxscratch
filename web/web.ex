@@ -54,7 +54,10 @@ defmodule Pxscratch.Web do
       import Pxscratch.ErrorHelpers
       import Pxscratch.Gettext
       import Pxscratch.Plugs
-      import Pxscratch.ViewHelper, only: [checkbox2: 2, checkbox2: 3]
+      import Pxscratch.ViewHelper, only: [
+        checkbox2: 2, checkbox2: 3,
+        load_highlightjs: 0, load_simplemde: 0,
+      ]
     end
   end
 

@@ -33,6 +33,27 @@
     border-radius: 4px;
     box-shadow: 0 4px 4px transparentize(black, 0.8);
   }
+
+  ol {
+    list-style: decimal;
+    padding-left: 24px;
+    margin-bottom: 1em;
+  }
+
+  ul {
+    list-style: square;
+    padding-left: 24px;
+    margin-bottom: 1em;
+  }
+
+  blockquote {
+    background: shade($background-color, 8%);
+
+    border-radius: 6px;
+    border-left: solid green 6px;
+
+    padding: 12px 12px 2px;
+  }
 }
 
 .post-unpublished {

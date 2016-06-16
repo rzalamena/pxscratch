@@ -84,13 +84,19 @@ form.link {
   h1 {
     font-size: $base-font-size + 1em;
     font-family: $serif-fonts;
+    margin-top: 0.25em;
+    margin-bottom: 1em;
   }
   h2 {
     font-size: $base-font-size + 0.75em;
     font-family: $serif-fonts;
+    margin-top: 0.25em;
+    margin-bottom: 0.75em;
   }
   h3 {
     font-size: $base-font-size + 0.5em;
     font-family: $serif-fonts;
+    margin-top: 0.25em;
+    margin-bottom: 0.50em;
   }
 }

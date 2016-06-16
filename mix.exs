@@ -53,7 +53,8 @@ defmodule Pxscratch.Mixfile do
      {:comeonin, "~> 2.4"},
      {:slugger, "~> 0.1.0"},
      {:scrivener, "~> 1.2.1"},
-     {:scrivener_html, "~> 1.1.1"}]
+     {:scrivener_html, "~> 1.1.1"},
+     {:earmark, "~> 0.2.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

@@ -20,4 +20,10 @@ defmodule Pxscratch.PostView do
       text
     end
   end
+
+  def markdown(text) do
+    text
+    |> Earmark.to_html
+    |> raw
+  end
 end

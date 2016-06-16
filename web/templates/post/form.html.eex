@@ -105,6 +105,21 @@
     <%= textarea f, :content, class: "form-control", rows: 16 %>
     <%= error_tag f, :content %>
   </div>
+  <%= load_highlightjs %>
+  <%= load_simplemde %>
+  <script>
+    var simplemde = new SimpleMDE({
+      element: document.getElementById("post_content"),
+      autosave: {
+        enabled: true,
+        delay: 1000,
+        uniqueId: "post_content_<%= Ecto.Changeset.get_field(@changeset, :id) %>",
+      },
+      renderingConfig: {
+        codeSyntaxHighlighting: true,
+      },
+    });
+  </script>
 
   <div class="form-group">
     <%= submit "Save", class: "btn btn-primary" %>
