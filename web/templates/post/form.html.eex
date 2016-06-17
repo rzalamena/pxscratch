@@ -88,6 +88,11 @@
           <%= error_tag f, :page_url %>
         </div>
         <div class="form-group">
+          <%= label f, :summary, class: "control-label" %>
+          <%= textarea f, :summary, class: "form-control" %>
+          <%= error_tag f, :summary %>
+        </div>
+        <div class="form-group">
           <%= submit "Save", class: "btn btn-primary" %>
         </div>
       </div>

@@ -8,6 +8,7 @@ defmodule Pxscratch.Post do
     field :comment_status, :integer, default: 0
     field :password, :string
     field :page_url, :string
+    field :summary, :string
     belongs_to :user, Pxscratch.User
 
     timestamps
@@ -17,7 +18,7 @@ defmodule Pxscratch.Post do
   end
 
   @required_fields ~w(user_id)
-  @optional_fields ~w(title content comment_status publish publish_date page_url protect password)
+  @optional_fields ~w(title summary content comment_status publish publish_date page_url protect password)
 
   def new_changeset(model, params \\ %{}) do
     if model.publish_date do

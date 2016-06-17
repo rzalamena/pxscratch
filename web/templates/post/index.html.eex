@@ -9,7 +9,7 @@
       <h2>Draft</h2>
     <% end %>
 
-    <%= resume(post.content) %>
+    <%= post.summary %>
 
     <div class="details">
       <p>

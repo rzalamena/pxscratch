@@ -12,15 +12,6 @@ defmodule Pxscratch.PostView do
     ], opts)
   end
 
-  def resume(text) do
-    if is_nil(text) do
-      ""
-    else
-      {text, _} = String.split_at(text, 32)
-      text
-    end
-  end
-
   def markdown(text) do
     text
     |> Earmark.to_html
